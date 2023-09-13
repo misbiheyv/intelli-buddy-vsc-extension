@@ -53,6 +53,10 @@
     "name": "misbiheyv",
     "email": "mishagorkovenko1103@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/misbiheyv/intelli-buddy-vsc-extension"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "16.x",
