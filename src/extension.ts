@@ -1,26 +1,30 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { processFileHandler, emptyStore } from './handler/index';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+/**
+ * Registers the command and subscribe
+ *
+ * @param context
+ * @param commandName
+ * @param handler
+ */
+function registerCommand(
+	context: vscode.ExtensionContext,
+	commandName: string,
+	handler: (...args: any[]) => any
+): void {
+	context.subscriptions.push(
+		vscode.commands.registerCommand(`intelli-buddy-executor.${commandName}`, handler)
+	);
+};
+
 export function activate(context: vscode.ExtensionContext) {
+	const showDiff = vscode.workspace.getConfiguration('intellibuddy').get('showDiff');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "intelli-buddy-runner" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('intelli-buddy-runner.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from intelli-buddy-runner!');
-	});
-
-	context.subscriptions.push(disposable);
+	registerCommand(context, 'processFile', processFileHandler.bind({withDiff: showDiff === false ? false : true}));
+	registerCommand(context, 'processFileWithoutDiff', processFileHandler.bind({withDiff: false}));
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	emptyStore();
+}

@@ -1,8 +1,8 @@
 {
-  "name": "intelli-buddy-runner",
-  "displayName": "intelli-buddy-runner",
-  "description": "",
-  "version": "0.0.1",
+  "name": "intelli-buddy-executor",
+  "displayName": "IntelliBuddy Executor",
+  "description": "Executes IntelliBuddy",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.81.0"
   },
@@ -14,29 +14,50 @@
   "contributes": {
     "commands": [
       {
-        "command": "intelli-buddy-runner.helloWorld",
-        "title": "Hello World"
+        "command": "intelli-buddy-executor.processFile",
+        "title": "IntelliBuddy: Processing"
+      },
+      {
+        "command": "intelli-buddy-executor.processFileWithoutDiff",
+        "title": "IntelliBuddy: Processing Without Diff"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "IntelliBuddy",
+      "properties": {
+        "intellibuddy.showDiff": {
+          "type": "boolean",
+          "default": true,
+          "description": "Shows git diffs between the original version and the processed one."
+        },
+        "intellibuddy.configAbsolutePath": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "You can pass an absolute path to the configuration file"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "lint": "eslint src --ext ts"
   },
   "devDependencies": {
-    "@types/vscode": "^1.81.0",
-    "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.81.0",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.47.0",
     "glob": "^10.3.3",
-    "mocha": "^10.2.0",
-    "typescript": "^5.1.6",
-    "@vscode/test-electron": "^2.3.4"
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "intelli-buddy": "^1.0.0-alpha.2"
   }
 }
