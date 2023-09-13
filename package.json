@@ -1,5 +1,6 @@
 {
   "name": "intelli-buddy-executor",
+  "publisher": "misbiheyv",
   "displayName": "IntelliBuddy Executor",
   "description": "Executes IntelliBuddy",
   "version": "0.1.0",
