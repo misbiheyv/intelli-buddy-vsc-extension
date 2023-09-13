@@ -48,6 +48,11 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts"
   },
+  "author": {
+    "name": "misbiheyv",
+    "email": "mishagorkovenko1103@gmail.com"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "16.x",
     "@types/vscode": "^1.81.0",
