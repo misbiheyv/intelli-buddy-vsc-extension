@@ -14,7 +14,7 @@ function registerCommand(
 	handler: (...args: any[]) => any
 ): void {
 	context.subscriptions.push(
-		vscode.commands.registerCommand(`intelli-buddy-executor.${commandName}`, handler)
+		vscode.commands.registerCommand(`intelli.${commandName}`, handler)
 	);
 };
 

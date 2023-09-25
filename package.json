@@ -1,9 +1,9 @@
 {
-  "name": "intelli-buddy-executor",
+  "name": "intelli",
   "publisher": "misbiheyv",
   "displayName": "IntelliBuddy Executor",
   "description": "Executes IntelliBuddy",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "engines": {
     "vscode": "^1.81.0"
   },
@@ -15,11 +15,11 @@
   "contributes": {
     "commands": [
       {
-        "command": "intelli-buddy-executor.processFile",
+        "command": "intelli.processFile",
         "title": "IntelliBuddy: Processing"
       },
       {
-        "command": "intelli-buddy-executor.processFileWithoutDiff",
+        "command": "intelli.processFileWithoutDiff",
         "title": "IntelliBuddy: Processing Without Diff"
       }
     ],
@@ -43,12 +43,12 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run build:clear && npm run compile",
-    "compile": "tsc -p ./",
+    "vscode:prepublish": "npm run compile",
+    "compile": "npm run build:clear && tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "build:clear": "rm -rf dist"
+    "build:clear": "rm -rf out"
   },
   "author": {
     "name": "misbiheyv",
@@ -65,10 +65,9 @@
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "@typescript-eslint/parser": "^6.4.1",
     "eslint": "^8.47.0",
-    "glob": "^10.3.3",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "intelli-buddy": "^1.0.0-alpha.2"
+    "intelli-buddy": "1.0.0-alpha.2"
   }
 }

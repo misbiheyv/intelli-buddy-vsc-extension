@@ -1,6 +1,6 @@
-import {sync} from 'glob';
 import * as path from 'path';
-import * as fs from 'fs';
+import {existsSync, statSync, readdirSync} from 'fs';
+
 import { Options } from './interface';
 
 /**
@@ -15,24 +15,33 @@ export function findClosestFileMatch(
 	targetFile: string,
 	{maxDepth}: Options = {maxDepth: Infinity}
 ) : string | undefined {
-	const filePath = sourcePath.split(path.sep);
+	const resolvedPath = path.resolve(sourcePath);
 
+	if (!existsSync(resolvedPath)) {
+		throw Error(`Path ${resolvedPath} does not exists!`);
+	}
+
+	const filePath = resolvedPath.split(path.sep).slice(0, -1);
+
+	let curPath = filePath.join(path.sep);
 	let destination;
 	let i = 0;
 
-	while (i++ < maxDepth) {
-		if (destination != null) {
+	while (i++ < maxDepth && filePath.length > 0) {
+		if (!statSync(curPath).isDirectory()) {
+			filePath.pop();
+			continue;
+		}
+
+		const files = readdirSync(curPath);
+
+		if (files.find((file) => file === targetFile) != null) {
+			destination = path.resolve(...filePath, targetFile);
 			break;
 		}
 
 		filePath.pop();
-
-		if (!fs.statSync(path.resolve(...filePath)).isDirectory()) {
-			continue;
-		}
-
-		const globPattern = `${path.resolve(...filePath)}/${targetFile}`;
-		destination = sync(globPattern)[0];
+		curPath = filePath.join(path.sep);
 	}
 
 	return destination;
