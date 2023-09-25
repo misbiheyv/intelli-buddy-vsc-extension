@@ -2,9 +2,10 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import {processFile, setConfigPath} from 'intelli-buddy';
-import {findClosestFileMatch} from '../helpers/index';
 
-let configPath: string | undefined = vscode.workspace.getConfiguration('intellibuddy').get('configAbsolutePath');
+import {findClosestFileMatch, configurationNamespace} from '../helpers';
+
+let configPath: string | undefined = vscode.workspace.getConfiguration(configurationNamespace).get('configAbsolutePath');
 
 /**
  * Clear the saved data
@@ -21,7 +22,7 @@ export async function processFileHandler(this: {withDiff: boolean}) {
 		filePath = vscode.window.activeTextEditor?.document.fileName;
 
 	if (!filePath) {
-		return vscode.window.showErrorMessage('You should open a necessary file.');
+		throw Error('You should open a necessary file.');
 	}
 
 	const
@@ -29,14 +30,14 @@ export async function processFileHandler(this: {withDiff: boolean}) {
 		filePathLen = filePath?.split(path.sep).length;
 
 	if (!folderPathLen || filePathLen - folderPathLen < 0) {
-		return vscode.window.showErrorMessage('Oops, something went wrong... You can send a report about it.');
+		throw Error('Oops, something went wrong... You can send a report about it.');
 	}
 
 	if (!configPath || !fs.existsSync(configPath))  {
 		configPath = findClosestFileMatch(filePath, '.ai-config.json', {maxDepth:  filePathLen - folderPathLen});
 
 		if (configPath == null) {
-			return vscode.window.showErrorMessage('Oops... The `.ai-config.json` file was not found.');
+			throw Error('Oops... The `.ai-config.json` file was not found.');
 		}
 	}
 
@@ -45,10 +46,6 @@ export async function processFileHandler(this: {withDiff: boolean}) {
 		await processFile(filePath, this.withDiff);
 
 	} catch (error) {
-		if (typeof error === 'string') {
-			return vscode.window.showErrorMessage('something was wrong.', error);
-		}
-
-		return vscode.window.showErrorMessage('something was wrong.');
+		throw error;
 	}
 }
