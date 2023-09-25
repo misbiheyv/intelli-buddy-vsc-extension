@@ -1,3 +1,5 @@
+[INFO  Extension URL](https://marketplace.visualstudio.com/items?itemName=misbiheyv.intelli-buddy-executor)
+
 # intelli-buddy-executor
 
 This is the executor extension for [`intelli-buddy`](https://github.com/misbiheyv/intelli-buddy).
