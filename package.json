@@ -2,8 +2,9 @@
   "name": "intelli-buddy-executor",
   "publisher": "misbiheyv",
   "displayName": "IntelliBuddy Executor",
+  "icon": "./assets/icon.png",
   "description": "Executes IntelliBuddy",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "engines": {
     "vscode": "^1.81.0"
   },
@@ -68,6 +69,6 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "intelli-buddy": "1.0.0-alpha.2"
+    "intelli-buddy": "1.0.0-alpha.4"
   }
 }
